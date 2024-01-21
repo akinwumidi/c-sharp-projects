@@ -4,32 +4,31 @@ using System.IO;
 
 class Entry
 {
-    public string Prompt { get; }
-    public string Response { get; }
-    public string Date { get; }
+    public string _Prompt { get; }
+    public string _Response { get; }
+    public string _Date { get; }
 
     public Entry(string prompt, string response, string date)
     {
-        Prompt = prompt;
-        Response = response;
-        Date = date;
+        _Prompt = prompt;
+        _Response = response;
+        _Date = date;
     }
 
     public override string ToString()
     {
-        return $"Date: {Date}\nPrompt: {Prompt}\nResponse: {Response}\n";
+        return $"Date: {_Date}\nPrompt: {_Prompt}\nResponse: {_Response}\n";
     }
 }
 
 class Journal
 {
-    private List<Entry> entries;
-    private List<string> prompts;
-
+    public List<Entry> _entries;
+    public List<string> _prompts;
     public Journal()
     {
-        entries = new List<Entry>();
-        prompts = new List<string>
+        _entries = new List<Entry>();
+        _prompts = new List<string>
         {
             "Who was the most interesting person I interacted with today?",
             "What was the best part of my day?",
@@ -38,6 +37,18 @@ class Journal
             "If I had one thing I could do over today, what would it be?"
         };
     }
+    public void PrintMenu()
+    {
+        Console.WriteLine("\n|| +++++++++++++++ Welcome to Journal Program ++++++++++++++++ ||\n ");
+        Console.WriteLine("1. Write a new entry");
+        Console.WriteLine("2. Display current / loaded journal");
+        Console.WriteLine("3. Save the journal to a file");
+        Console.WriteLine("4. Load the journal from a file");
+        Console.WriteLine("5. Exit");
+        Console.WriteLine("\n|| +++++++++++++++ Welcome to Journal Program ++++++++++++++++ || \n");
+        Console.Write("Please Enter a response ( 1-5 ): ");
+    }
+ 
 
     public void AddEntry()
     {
@@ -47,12 +58,12 @@ class Journal
         Console.Write("Your response: ");
         string response = Console.ReadLine();
         Entry entry = new Entry(prompt, response, date);
-        entries.Add(entry);
+        _entries.Add(entry);
     }
 
     public void DisplayJournal()
     {
-        foreach (var entry in entries)
+        foreach (var entry in _entries)
         {
             Console.WriteLine(entry);
         }
@@ -62,16 +73,16 @@ class Journal
     {
         using (StreamWriter writer = new StreamWriter(fileName))
         {
-            foreach (var entry in entries)
+            foreach (var entry in _entries)
             {
-                writer.WriteLine($"\n{entry.Date}|{entry.Prompt}|{entry.Response}");
+                writer.WriteLine($"{entry._Date}|{entry._Prompt}|{entry._Response}");
             }
         }
     }
 
     public void LoadFromFile(string fileName)
     {
-        entries.Clear();
+        _entries.Clear();
         using (StreamReader reader = new StreamReader(fileName))
         {
             while (!reader.EndOfStream)
@@ -81,114 +92,106 @@ class Journal
                 string prompt = parts[1];
                 string response = parts[2];
                 Entry entry = new Entry(prompt, response, date);
-                entries.Add(entry);
+                _entries.Add(entry);
             }
+        }
+    }
+
+    public void LoadJournal()
+    {
+        List<string> _savedFileNames = GetSavedFileNames();
+        if (_savedFileNames.Count > 0)
+        {
+            Console.WriteLine("Available Journals to Load:");
+            for (int i = 0; i < _savedFileNames.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {_savedFileNames[i]}");
+            }
+
+            Console.Write("Enter the number of the journal to load: ");
+            if (int.TryParse(Console.ReadLine(), out int journalNumber) && journalNumber >= 1 && journalNumber <= _savedFileNames.Count)
+            {
+                string selectedFileName = _savedFileNames[journalNumber - 1];
+                LoadFromFile(selectedFileName);
+                Console.WriteLine($"\n{selectedFileName} Journal loaded, please enter (2) to Display content");
+
+            }
+            else
+            {
+                Console.WriteLine($"\nInvalid entry. Please enter a valid number between ( 1-{_savedFileNames.Count} ).");
+
+            }
+        }
+        else
+        {
+            Console.WriteLine("\nNo saved journals available to load, Please write and save a journal");
+
         }
     }
 
     public static List<string> GetSavedFileNames()
     {
-        List<string> savedFileNames = new List<string>();
+        List<string> _savedFileNames = new List<string>();
 
         DirectoryInfo directory = new DirectoryInfo(Directory.GetCurrentDirectory());
         foreach (var file in directory.GetFiles("*.txt"))
         {
-            savedFileNames.Add(file.Name);
+            _savedFileNames.Add(file.Name);
         }
 
-        return savedFileNames;
+        return _savedFileNames;
     }
 
-    private string GetRandomPrompt()
+    public string GetRandomPrompt()
     {
         Random random = new Random();
-        int index = random.Next(prompts.Count);
-        return prompts[index];
+        int index = random.Next(_prompts.Count);
+        return _prompts[index];
     }
 }
 
 class Program
-{
+{ 
     static void Main()
     {
-        Journal journal = new Journal();
+        Journal _journal = new Journal();
         bool exit = false;
 
         do
         {
-            PrintMenu();
+            _journal.PrintMenu();
             if (int.TryParse(Console.ReadLine(), out int choice))
             {
                 switch (choice)
                 {
                     case 1:
-                        journal.AddEntry();
+                        _journal.AddEntry();
                         break;
                     case 2:
-                        journal.DisplayJournal();
+                        _journal.DisplayJournal();
                         break;
                     case 3:
                         Console.Write("Please enter a name to save journal, end with (.txt): ");
-                        string saveFileName = Console.ReadLine();
-                        journal.SaveToFile(saveFileName);
+                        string userFileName = Console.ReadLine();
+                        _journal.SaveToFile(userFileName);
                         break;
                     case 4:
-                        LoadJournal(journal);
+                        _journal.LoadJournal();
                         break;
                     case 5:
                         exit = true;
                         break;
                     default:
-                        Console.WriteLine("Invalid choice. Please enter a number between 1 and 5.");
+                        Console.WriteLine("\nInvalid choice. Please enter a number between 1 and 5.");
                         break;
                 }
             }
             else
             {
-                Console.WriteLine("Invalid entry. Please enter a number.");
+                Console.WriteLine("\nInvalid input. Please enter a number.");
             }
 
         } while (!exit);
     }
 
-    static void PrintMenu()
-    {
-        Console.WriteLine("\n|| +++++++++++++++ Welcome to Journal Program ++++++++++++++++ ||\n ");
-        Console.WriteLine("1. Write a new entry");
-        Console.WriteLine("2. Display the journal");
-        Console.WriteLine("3. Save the journal to a file");
-        Console.WriteLine("4. Load the journal from a file");
-        Console.WriteLine("5. Exit");
-        Console.WriteLine("\n|| +++++++++++++++ Welcome to Journal Program ++++++++++++++++ || \n");
-        Console.Write("Please Enter a response ( 1-5 ): ");
-    }
-
-    static void LoadJournal(Journal journal)
-    {
-        List<string> savedFileNames = Journal.GetSavedFileNames();
-        if (savedFileNames.Count > 0)
-        {
-            Console.WriteLine("Available Journals to Load:");
-            for (int i = 0; i < savedFileNames.Count; i++)
-            {
-                Console.WriteLine($"{i + 1}. {savedFileNames[i]}");
-            }
-
-            Console.Write("Please enter the journal number you wish to load: ");
-            if (int.TryParse(Console.ReadLine(), out int journalNumber) && journalNumber >= 1 && journalNumber <= savedFileNames.Count)
-            {
-                string selectedFileName = savedFileNames[journalNumber - 1];
-                journal.LoadFromFile(selectedFileName);
-                Console.WriteLine($"Journal loaded from {selectedFileName}");
-            }
-            else
-            {
-                Console.WriteLine("Invalid entry. Please enter a valid number.");
-            }
-        }
-        else
-        {
-            Console.WriteLine("No saved journals available to load, Please write and save a journal");
-        }
-    }
 }

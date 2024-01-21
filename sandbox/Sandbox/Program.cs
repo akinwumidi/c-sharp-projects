@@ -1,3 +1,4 @@
+// C# Basics Practice
 // class Program
 // {
 //     static void Main(string[] args){
@@ -11,9 +12,9 @@
 //     Console.WriteLine($"My name is {myName} and i am {age} years old");
 //     }
 // }
- 
 
-// Class person
+ 
+// Abstraction practice
 public class Person
 {
     public string Name { get; set; }
@@ -32,7 +33,10 @@ public class Person
     }
 }
 
-// Class family 
+// Class to represent a son
+public class Son : Person
+{
+}
 public class Family
 {
     public Son[] Sons { get; set; }
@@ -47,21 +51,17 @@ public class Family
     }
 }
 
-// Class to represent a son
-public class Son : Person
-{
-    // Additional properties or methods specific to a son can be added here
-}
+
 
 class Program
 {
     static void Main()
     {
         // Creating a family
-        Family myFamily = new Family();
+        Family _myFamily = new Family();
 
         // Displaying age and birthday information for each son
-        foreach (var son in myFamily.Sons)
+        foreach (var son in _myFamily.Sons)
         {
             Console.WriteLine($"{son.Name}'s Age: {son.CalculateAge()} years");
             son.DisplayBirthdayInfo();
