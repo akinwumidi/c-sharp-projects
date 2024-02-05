@@ -55,10 +55,10 @@ class Program
         breathe.setActivity(BrName,BrDesc,displayName);
         
 
-        string lName = "\n+++++++++++++ Listening Activity +++++++++++++\n";
-        string ldisplayName = " Listening Activity ";
+        string lName = "\n+++++++++++++ Listing Activity +++++++++++++\n";
+        string ldisplayName = " Listing Activity ";
         string lDesc = "This activity will help you reflect on the good things in your life\nby having you list as many things as you can in a certain area.";
-        Listening listen = new Listening();
+        Listing listen = new Listing();
         listen.setActivity(lName,lDesc,ldisplayName);
 
 
@@ -82,7 +82,7 @@ class Program
         Console.WriteLine("Menu Options:\n");
         Console.WriteLine("    1. Start Breathing activity");
         Console.WriteLine("    2. Start Reflecting activity");
-        Console.WriteLine("    3. Start listening activity");
+        Console.WriteLine("    3. Start listing activity");
         Console.WriteLine("    4. Quit"); 
         Console.WriteLine("\n|| +++++++++++++++ Mindfulness Program ++++++++++++++++ || \n");
         Console.Write("Please Enter a response ( 1-4 ): ");

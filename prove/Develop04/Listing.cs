@@ -1,21 +1,21 @@
 using System;
-class Listening:Activity{
+class Listing:Activity{
 
-    public List<string> _listeningQues = new List<string>();
-    private List<string> _listeningAns = new List<string>();
+    public List<string> _listingQues = new List<string>();
+    private List<string> _listingAns = new List<string>();
     
 
 
     //setting the questions to be displayed to the user
     public void setQuestion(string question){
-        _listeningQues.Add($"{question}");
+        _listingQues.Add($"{question}");
     }
 
     public string random(){
             var random = new Random();
             //saving the random number picked from the length of the list into the string variable index.
-            int index = random.Next(_listeningQues.Count);
-            string wrds = _listeningQues[index];
+            int index = random.Next(_listingQues.Count);
+            string wrds = _listingQues[index];
             Console.WriteLine(wrds);
             return $"{wrds}";
         }
@@ -23,7 +23,7 @@ class Listening:Activity{
 
     //take the returned question and pass it as a parameter to this function 
     public void saveAns(string ques, string ans){
-		_listeningAns.Add($"{ques}\nAns: {ans}");
+		_listingAns.Add($"{ques}\nAns: {ans}");
         }
 
 
@@ -50,7 +50,7 @@ class Listening:Activity{
             start += 1;
         } 
 
-        Console.WriteLine($"You have entered {_listeningAns.Count} responses\n");
+        Console.WriteLine($"You have entered {_listingAns.Count} responses\n");
         Console.Write("Will you like to view your responses? (yes or no): ");
         string userChoice = Console.ReadLine();
         if(userChoice.ToLower() == "yes"){
@@ -67,8 +67,8 @@ class Listening:Activity{
     }
     public void displayEntries(){
         Console.WriteLine("\nYour list of responses");
-            if(_listeningAns.Count>0){
-                foreach(string ans in _listeningAns){
+            if(_listingAns.Count>0){
+                foreach(string ans in _listingAns){
                     Console.WriteLine(ans);
                 }
             }else{
