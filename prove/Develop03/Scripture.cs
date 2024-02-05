@@ -2,38 +2,49 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ScriptureMemorizer
+public class Scripture
 {
-    public class Scripture
+    private Reference _reference;
+    private List<Word> _words;
+
+    public Scripture(Reference reference, string text)
     {
-        private Reference _reference;
-        private List<Word> _words;
+        _reference = reference;
+        _words = text.Split(' ').Select(word => new Word(word)).ToList();
+    }
 
-        public Scripture(Reference reference, string text)
+    public void HideRandomWords(int numberToHide)
+    {
+        var visibleWords = _words.Where(word => !word.IsHidden()).ToList();
+
+        if (visibleWords.Count <= numberToHide)
         {
-            _reference = reference;
-            _words = text.Split(' ').Select(word => new Word(word)).ToList();
-        }
-
-        public void HideRandomWords(int numberToHide)
-        {
-            Random random = new Random();
-
-            for (int i = 0; i < numberToHide; i++)
+            foreach (var word in visibleWords)
             {
-                int randomIndex = random.Next(_words.Count);
-                _words[randomIndex].Hide();
+                word.Hide();
             }
         }
-
-        public string GetDisplayText()
+        else
         {
-            return $"{_reference.GetDisplayText()}\n\n{_words.Aggregate("", (current, word) => current + word.GetDisplayText() + " ")}";
+            Random random = new Random();
+            for (int i = 0; i < numberToHide; i++)
+            {
+                int index = random.Next(visibleWords.Count);
+                visibleWords[index].Hide();
+                visibleWords.RemoveAt(index);
+            }
         }
+    }
 
-        public bool IsCompletelyHidden()
-        {
-            return _words.All(word => word.IsHidden());
-        }
+    public string GetDisplayText()
+    {
+        string displayText = $"{_reference.GetDisplayText()}\n";
+        displayText += string.Join(" ", _words.Select(word => word.GetDisplayText()));
+        return displayText;
+    }
+
+    public bool IsCompletelyHidden()
+    {
+        return _words.All(word => word.IsHidden());
     }
 }
