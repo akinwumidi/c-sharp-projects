@@ -1,0 +1,2 @@
+EternalGoal,Sealing at the Temple,Sealing with my family at the Temple would help me prepare me for celestial kingdom,100,110
+ChecklistGoal,Read my scriptures,Reading myscriptures would help me listen to the holyspirit,20,110
