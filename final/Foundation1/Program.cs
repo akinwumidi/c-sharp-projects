@@ -17,14 +17,14 @@ class Program
         Comments comment = new Comments();
 
         //First video
-        video1.addComentsToList(comment.addComments("Omotoso David","Wow such a nice song from the heart"));
-        video1.addComentsToList(comment.addComments("Nathan Parrish","Wow ypu guys are really wonderful singers"));
-        video1.addComentsToList(comment.addComments("Danny Buckrow","i will like to attend your gig"));
+        video1.addComentsToList(comment.addComments("Israel Damilola Akinwumi","Such a nice song from the heart"));
+        video1.addComentsToList(comment.addComments("Drake Miguel","Wow ypu guys are really wonderful singers"));
+        video1.addComentsToList(comment.addComments("Mini Borrows","i will like to attend your gig"));
 
         //Second video
         video2.addComentsToList(comment.addComments("Jimmy Bush","I love this song so much"));
-        video2.addComentsToList(comment.addComments("Omotoso Kehinde","I dedicate this song to my sister"));
-        video2.addComentsToList(comment.addComments("Ayomide","I can feel the chills down my spine listening to this lyrics"));
+        video2.addComentsToList(comment.addComments("Samuel Akinwumi","I dedicate this song to my sister"));
+        video2.addComentsToList(comment.addComments("Tomiwa James","I can feel the chills down my spine listening to this lyrics"));
 
         //Third video
         video3.addComentsToList(comment.addComments("Rodriguez","Such an inspiring talk from the leaders of The Church Of Jesus Christ"));
