@@ -114,7 +114,7 @@ public void ListGoalDetails()
 {
     if (_goals.Count == 0)
     {
-        Console.WriteLine("You have no goals recorded. Please create a new goal.");
+        Console.WriteLine("You have no goals recorded. Please create or load a goal.");
         return;
     }
 
@@ -134,7 +134,7 @@ public void ListGoalDetails()
     {
         if (_goals.Count == 0)
         {
-            Console.WriteLine("You have no goals recorded. Please create a new goal.");
+            Console.WriteLine("You have no goals recorded. Please create or load a goal.");
             return;
         }
 
@@ -158,8 +158,8 @@ public void ListGoalDetails()
 
         if (_goals[index].IsComplete())
         {
-            Console.WriteLine("Goal completed! Removing from the list.");
-            _goals.RemoveAt(index);
+            Console.WriteLine("Goal completed! Keep it up");
+            // _goals.RemoveAt(index);
         }
 
         Console.WriteLine($"Your current score: {_score}");
@@ -169,7 +169,7 @@ public void ListGoalDetails()
 {
     Console.Write("Enter desire filename end with (.txt): ");
     string fileName = Console.ReadLine();
-    using (StreamWriter writer = new StreamWriter($"{fileName}.txt"))
+    using (StreamWriter writer = new StreamWriter($"{fileName}"))
     {
         foreach (var goal in _goals)
         {
@@ -182,18 +182,16 @@ public void ListGoalDetails()
 public void LoadGoals()
 {
     Console.WriteLine("Available saved files:");
-    string[] files = Directory.GetFiles(Directory.GetCurrentDirectory(), "*.txt")
-                               .Select(Path.GetFileNameWithoutExtension)
-                               .ToArray();
+    string[] files = Directory.GetFiles(Directory.GetCurrentDirectory(), "*.txt").Select(Path.GetFileNameWithoutExtension).ToArray();
     for (int i = 0; i < files.Length; i++)
     {
-        Console.WriteLine($"{i + 1}. {files[i]}");
+        Console.WriteLine($"{i + 1}. {files[i]}.txt");
     }
 
     int choice;
     do
     {
-        Console.Write("Enter the number of the file to load goals from (or 0 to cancel): ");
+        Console.Write("Enter file number to load from (or 0 to cancel): ");
     } while (!int.TryParse(Console.ReadLine(), out choice) || choice < 0 || choice > files.Length);
 
     if (choice == 0)

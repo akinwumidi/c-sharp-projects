@@ -1,0 +1,3 @@
+SimpleGoal,Learn to swim,Learning to swim would enable me to be able to save others incase of a water disaster ,20,200
+EternalGoal,Sealing,Sealing at the Temple would help prepare me for Celestial glory,100,200
+ChecklistGoal,Scripture study,Studying my scriptures would help me draw closer to heavenly father,30,200
